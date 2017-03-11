@@ -5,6 +5,15 @@ Based on the "Online 3D dice roller" from http://a.teall.info/dice (http://www.t
 
 "You can assume that it has the MIT license (or that else) if you wish so. I do not love any licenses at all and prefer to simply say that it is completely free =)" - Anton Natarov
 
+## Features
+* 4/6/8/10/12/20 sided dice available
+* Customize the appearance of the dice
+* You can define the side/value, which should be upside after the die has fallen
+
+## Demos
+* [Types and sizes](./examples/types-and-sizes.html) - See the possible dice shapes and options (size / font color / back color)
+* [Rolling](./examples/rolling.html) - See, how you can roll 5 dice, which will always land on the same sides
+
 ## Install
 
     npm install threejs-dice
@@ -31,7 +40,11 @@ Based on the "Online 3D dice roller" from http://a.teall.info/dice (http://www.t
         // If you want to place the mesh somewhere else, you have to update the body
         dice.getObject().position.x = 150;
         dice.getObject().position.y = 100;
+        dice.getObject().rotation.x = 20 * Math.PI / 180;
         dice.updateBodyFromMesh();
+        
+        // Set the value of the side, which will be upside after the dice lands
+        DiceManager.prepareValues([{dice: dice, value: 6}]);
         
         //Animate everything
         function animate() {

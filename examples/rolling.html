@@ -16,7 +16,7 @@
 // MAIN
 
 // standard global variables
-var container, scene, camera, renderer, controls, stats, world, dice;
+var container, scene, camera, renderer, controls, stats, world, dice = [];
 
 init();
 
@@ -30,7 +30,7 @@ function init()
 	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.01, FAR = 20000;
 	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
 	scene.add(camera);
-	camera.position.set(-30,30,30);
+	camera.position.set(0,30,30);
 	// RENDERER
     renderer = new THREE.WebGLRenderer( {antialias:true} );
 	renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -101,15 +101,36 @@ function init()
 
     //Walls
 
+    var colors = ['#ff0000', '#ffff00', '#00ff00', '#0000ff', '#ff00ff'];
+    for (var i = 0; i < 5; i++) {
+        var die = new DiceD6({size: 1.5, backColor: colors[i]});
+        scene.add(die.getObject());
+        dice.push(die);
+    }
 
-    dice = new DiceD6({size: 1.5});
-    scene.add(dice.getObject());
-    dice.getObject().position.y = 10;
-    dice.getObject().quaternion.x = (Math.random()*90-45) * Math.PI / 180;
-    dice.getObject().quaternion.z = (Math.random()*90-45) * Math.PI / 180;
-    dice.updateBodyFromMesh();
+    function randomDiceThrow() {
+        var diceValues = [];
 
-	camera.lookAt(dice.getObject());
+        for (var i = 0; i < dice.length; i++) {
+            let yRand = Math.random() * 20
+            dice[i].getObject().position.x = -15 - (i % 3) * 1.5;
+            dice[i].getObject().position.y = 2 + Math.floor(i / 3) * 1.5;
+            dice[i].getObject().position.z = -15 + (i % 3) * 1.5;
+            dice[i].getObject().quaternion.x = (Math.random()*90-45) * Math.PI / 180;
+            dice[i].getObject().quaternion.z = (Math.random()*90-45) * Math.PI / 180;
+            dice[i].updateBodyFromMesh();
+            let rand = Math.random() * 5;
+            dice[i].getObject().body.velocity.set(25 + rand, 40 + yRand, 15 + rand);
+            dice[i].getObject().body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10);
+
+            diceValues.push({dice: dice[i], value: i + 1});
+        }
+
+        DiceManager.prepareValues(diceValues);
+    }
+
+    setInterval(randomDiceThrow, 3000);
+    randomDiceThrow();
 
     requestAnimationFrame( animate );
 }
@@ -125,9 +146,11 @@ function animate()
 }
 
 function updatePhysics() {
-	world.step(1.0 / 60.0);
-	
-	dice.updateMeshFromBody();
+    world.step(1.0 / 60.0);
+
+    for (var i in dice) {
+        dice[i].updateMeshFromBody();
+    }
 }
 
 function update()
