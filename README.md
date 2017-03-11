@@ -1,9 +1,8 @@
 # threejs-dice
 
-Based on the "Online 3D dice roller" from http://a.teall.info/dice (http://www.teall.info/2014/01/online-3d-dice-roller.htm). Credits go to Anton Natarov, who published it under public domain.
-![Online 3D dice roller](./teal_dice.png)
+Create dice for your threejs scene and throw them on a specific side with cannonjs.
 
-"You can assume that it has the MIT license (or that else) if you wish so. I do not love any licenses at all and prefer to simply say that it is completely free =)" - Anton Natarov
+![Dice types](./docs/types.png) ![Start rolling](./docs/rolling_1.png) ![Finished rolling](./docs/rolling_2.png)
 
 ## Features
 * 4/6/8/10/12/20 sided dice available
@@ -59,3 +58,9 @@ Based on the "Online 3D dice roller" from http://a.teall.info/dice (http://www.t
         requestAnimationFrame(animate);
         
     </script>
+    
+## Credits
+Based on the "Online 3D dice roller" from http://a.teall.info/dice (http://www.teall.info/2014/01/online-3d-dice-roller.htm). Credits go to Anton Natarov, who published it under public domain.
+![Online 3D dice roller](./docs/teal_dice.png)
+
+"You can assume that it has the MIT license (or that else) if you wish so. I do not love any licenses at all and prefer to simply say that it is completely free =)" - Anton Natarov
