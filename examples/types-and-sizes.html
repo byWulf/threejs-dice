@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../node_modules/three/build/three.js"></script>
+    <script src="../node_modules/cannon/build/cannon.js"></script>
+    <script src="../node_modules/three/examples/js/controls/OrbitControls.js"></script>
+    <script src="../node_modules/three/examples/js/libs/stats.min.js"></script>
+
+    <script src="../lib/dice.js"></script>
+</head>
+<body>
+<div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
+
+<script>
+// MAIN
+
+// standard global variables
+var container, scene, camera, renderer, controls, stats;
+
+init();
+animate();
+
+// FUNCTIONS
+function init()
+{
+	// SCENE
+	scene = new THREE.Scene();
+	// CAMERA
+	var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
+	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+	scene.add(camera);
+	// RENDERER
+		renderer = new THREE.WebGLRenderer( {antialias:true} );
+	renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	container = document.getElementById( 'ThreeJS' );
+	container.appendChild( renderer.domElement );
+	// EVENTS
+	// CONTROLS
+	controls = new THREE.OrbitControls( camera, renderer.domElement );
+	camera.position.set(100, 500, 300);
+	camera.rotation.x = -0.95;
+	// STATS
+	stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.bottom = '0px';
+	stats.domElement.style.zIndex = 100;
+	container.appendChild( stats.domElement );
+	// LIGHT
+	var light = new THREE.PointLight(0xffffff, 0.8);
+	light.position.set(0,150,100);
+	scene.add(light);
+	// LIGHT
+	var light = new THREE.PointLight(0xffffff, 0.8);
+	light.position.set(-400,150,100);
+	scene.add(light);
+	// LIGHT
+	var light = new THREE.PointLight(0xffffff, 0.8);
+	light.position.set(400,150,100);
+	scene.add(light);
+	// FLOOR
+	var floorMaterial = new THREE.MeshPhongMaterial( { color: '#00aa00', side: THREE.DoubleSide } );
+	var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+	var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+	floor.position.y = -0.5;
+	floor.rotation.x = Math.PI / 2;
+	scene.add(floor);
+	// SKYBOX/FOG
+	var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
+	var skyBoxMaterial = new THREE.MeshPhongMaterial( { color: 0x9999ff, side: THREE.BackSide } );
+	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
+	// scene.add(skyBox);
+	scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
+
+	////////////
+	// CUSTOM //
+	////////////
+    let world = new CANNON.World();
+
+    world.gravity.set(0, 0, -9.8 * 800);
+    world.broadphase = new CANNON.NaiveBroadphase();
+    world.solver.iterations = 16;
+
+    DiceManager.setWorld(world);
+    for (let i of [1, 10, 50, 100]) {
+        let dice4 = new DiceD4({size: i});
+        scene.add(dice4.getObject());
+        dice4.getObject().position.x = -300;
+        dice4.getObject().position.y = 85;
+        dice4.getObject().position.z = -i * 3;
+
+        let dice6 = new DiceD6({size: i, fontColor: '#aaaaaa', backColor: '#ff0000'});
+        scene.add(dice6.getObject());
+        dice6.getObject().position.x = -150;
+        dice6.getObject().position.y = 85;
+        dice6.getObject().position.z = -i * 3;
+
+        let dice8 = new DiceD8({size: i, fontColor: '#ffffff', backColor: '#0000ff'});
+        scene.add(dice8.getObject());
+        dice8.getObject().position.x = 0;
+        dice8.getObject().position.y = 85;
+        dice8.getObject().position.z = -i * 3;
+
+        let dice10 = new DiceD10({size: i});
+        scene.add(dice10.getObject());
+        dice10.getObject().position.x = 150;
+        dice10.getObject().position.y = 85;
+        dice10.getObject().position.z = -i * 3;
+
+        let dice12 = new DiceD12({size: i});
+        scene.add(dice12.getObject());
+        dice12.getObject().position.x = 300;
+        dice12.getObject().position.y = 85;
+        dice12.getObject().position.z = -i * 3;
+
+        let dice20 = new DiceD20({size: i});
+        scene.add(dice20.getObject());
+        dice20.getObject().position.x = 450;
+        dice20.getObject().position.y = 85;
+        dice20.getObject().position.z = -i * 3;
+    }
+
+}
+
+function animate()
+{
+    requestAnimationFrame( animate );
+	render();
+	update();
+}
+
+function update()
+{
+
+	controls.update();
+	stats.update();
+}
+
+function render()
+{
+	renderer.render( scene, camera );
+}
+</script>
+</body>
+</html>

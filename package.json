@@ -1,0 +1,29 @@
+{
+  "name": "threejs-dice",
+  "version": "1.0.0",
+  "description": "Create 3d dice which can be rolled.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byWulf/threejs-dice.git"
+  },
+  "keywords": [
+    "threejs", "cannon", "dice", "rpg", "tabletop", "boardgame"
+  ],
+  "author": "byWulf <wulf1337@gmail.com>",
+  "contributors": [
+    "Anton Natarov (http://www.teall.info)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/byWulf/threejs-dice/issues"
+  },
+  "homepage": "https://github.com/byWulf/threejs-dice#readme",
+  "dependencies": {
+    "cannon": "^0.6.2",
+    "three": "^0.84.0"
+  }
+}
