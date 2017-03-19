@@ -1,6 +1,6 @@
 {
   "name": "threejs-dice",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Create 3d dice which can be rolled.",
   "main": "lib/dice.js",
   "typings": "index.d.ts",
