@@ -29,9 +29,11 @@
   },
   "homepage": "https://github.com/byWulf/threejs-dice#readme",
   "dependencies": {
-    "@types/cannon": "^0.1.0",
-    "@types/three": "^0.84.2",
     "cannon": "^0.6.2",
-    "three": "^0.84.0"
+    "three": "^0.90.0"
+  },
+  "devDependencies": {
+    "@types/cannon": "^0.1.2",
+    "@types/three": "^0.89.11"
   }
 }
