@@ -32,6 +32,8 @@ declare class DiceObject {
     getObject(): MeshWithBody;
     updateMeshFromBody(): void;
     updateBodyFromMesh(): void;
+    isFinished(): boolean;
+    getUpsideValue(): number;
 }
 
 export declare class DiceD4 extends DiceObject { }
