@@ -1,6 +1,6 @@
 {
   "name": "threejs-dice",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Create 3d dice which can be rolled.",
   "main": "lib/dice.js",
   "typings": "index.d.ts",
@@ -29,9 +29,9 @@
   },
   "homepage": "https://github.com/byWulf/threejs-dice#readme",
   "dependencies": {
-    "cannon": "^0.6.2",
-    "three": "^0.90.0",
     "@types/cannon": "^0.1.2",
-    "@types/three": "^0.89.11"
+    "@types/three": "^0.127.1",
+    "cannon": "^0.6.2",
+    "three": "^0.127.0"
   }
 }
