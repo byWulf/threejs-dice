@@ -113,6 +113,7 @@ function init()
 
         for (var i = 0; i < dice.length; i++) {
             let yRand = Math.random() * 20
+            dice[i].resetBody();
             dice[i].getObject().position.x = -15 - (i % 3) * 1.5;
             dice[i].getObject().position.y = 2 + Math.floor(i / 3) * 1.5;
             dice[i].getObject().position.z = -15 + (i % 3) * 1.5;
