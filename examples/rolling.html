@@ -77,7 +77,7 @@ function init()
 	floor.rotation.x = Math.PI / 2;
 	scene.add(floor);
 	// SKYBOX/FOG
-	var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
+	var skyBoxGeometry = new THREE.BoxGeometry( 10000, 10000, 10000 );
 	var skyBoxMaterial = new THREE.MeshPhongMaterial( { color: 0x9999ff, side: THREE.BackSide } );
 	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
 	// scene.add(skyBox);
@@ -113,6 +113,7 @@ function init()
 
         for (var i = 0; i < dice.length; i++) {
             let yRand = Math.random() * 20
+            dice[i].resetBody(); // As the die is going to be reused between throws, it is necessary to reset the body
             dice[i].getObject().position.x = -15 - (i % 3) * 1.5;
             dice[i].getObject().position.y = 2 + Math.floor(i / 3) * 1.5;
             dice[i].getObject().position.z = -15 + (i % 3) * 1.5;
